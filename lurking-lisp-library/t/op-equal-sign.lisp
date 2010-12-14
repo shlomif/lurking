@@ -18,7 +18,7 @@
 
 (let ((producer (make-instance 'tap-producer)))
   (init-test producer)
-  (emit-plan producer :plan-argument 4) ; simple plan, three tests planned
+  (emit-plan producer :plan-argument 5) ; simple plan, three tests planned
   (let ((result 28))
     (-= result 4)
     ; TEST
@@ -36,5 +36,9 @@
     (concat-uc= string1 "end")
     (emit-result producer :success (equal string1 "Start END")
                  :description "Testing op2assign directly"))
+
+  ; TEST
+  (emit-result producer :success (equal (~ "One" "Two" "Three") "OneTwoThree")
+               :description "Testing the ~ function for string concatenation.")
 
   (finalize-test producer))

@@ -11,3 +11,5 @@
 ;;;(defmacro *= (x y)
 ;;;  `(setf ,x (* ,x ,y)))
 
+(defun ~ (&rest lst)
+  (apply 'concatenate 'string lst))
