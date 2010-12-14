@@ -14,9 +14,11 @@
 (defun concat-uc (x y)
   (concatenate 'string x (string-upcase y)))
 
+(op2assign concat-uc)
+
 (let ((producer (make-instance 'tap-producer)))
   (init-test producer)
-  (emit-plan producer :plan-argument 3) ; simple plan, three tests planned
+  (emit-plan producer :plan-argument 4) ; simple plan, three tests planned
   (let ((result 28))
     (-= result 4)
     ; TEST
@@ -27,7 +29,12 @@
 
     ; TEST
     (emit-result producer :success (equal (concat-uc "foo " "bar") "foo BAR")
-                 :description "Testing concat-uc")
+                 :description "Testing concat-uc"))
 
-    )
+  (let ((string1 "Start "))
+    ; TEST
+    (concat-uc= string1 "end")
+    (emit-result producer :success (equal string1 "Start END")
+                 :description "Testing op2assign directly"))
+
   (finalize-test producer))
