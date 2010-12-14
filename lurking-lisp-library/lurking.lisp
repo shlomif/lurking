@@ -1,2 +1,2 @@
-(defun -= (a b)
-  nil)
+(defmacro -= (x y)
+  `(incf ,x (- ,y)))
