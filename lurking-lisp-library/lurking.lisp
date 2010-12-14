@@ -3,6 +3,7 @@
         `(defmacro ,op= (var . values)
             `(setf ,var (,',op ,var ,@values)))))
 
+(op2assign +)
 (op2assign -)
 (op2assign *)
 
@@ -13,3 +14,5 @@
 
 (defun ~ (&rest lst)
   (apply 'concatenate 'string lst))
+
+(op2assign ~)
