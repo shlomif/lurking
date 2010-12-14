@@ -18,7 +18,7 @@
 
 (let ((producer (make-instance 'tap-producer)))
   (init-test producer)
-  (emit-plan producer :plan-argument 7) ; simple plan, three tests planned
+  (emit-plan producer :plan-argument 9) ; simple plan, three tests planned
   (let ((result 28))
     (-= result 4)
     ; TEST
@@ -51,5 +51,17 @@
     (~= string1 "World")
     (emit-result producer :success (equal string1 "HelloWorld")
                  :description "Testing ~="))
+
+  ; Let's test the (while ) macro.
+  (let ((x 1) (cnt 0))
+    (while (< x 10)
+           (*= x 2)
+           (+= cnt 1))
+    ; TEST
+    (emit-result producer :sucesss (= x 16)
+                 :description "while loop works (1)")
+    ; TEST
+    (emit-result producer :success (= cnt 4)
+                 :description "while loop works (2)"))
 
   (finalize-test producer))
