@@ -18,7 +18,7 @@
 
 (let ((producer (make-instance 'tap-producer)))
   (init-test producer)
-  (emit-plan producer :plan-argument 9) ; simple plan, three tests planned
+  (emit-plan producer :plan-argument 12)
   (let ((result 28))
     (-= result 4)
     ; TEST
@@ -63,5 +63,20 @@
     ; TEST
     (emit-result producer :success (= cnt 4)
                  :description "while loop works (2)"))
+
+  ; Let's test the (with ) macro.
+  (with (v5 5 v10 10 v8 8)
+
+        ; TEST
+        (emit-result producer :success (= v5 5)
+                     :description "with - v5 is 5")
+
+        ; TEST
+        (emit-result producer :success (= v8 8)
+                     :description "with - v8 is 8")
+
+        ; TEST
+        (emit-result producer :success (= v10 10)
+                     :description "with - v10 is 10"))
 
   (finalize-test producer))

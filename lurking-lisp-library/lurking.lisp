@@ -25,3 +25,15 @@
            ,@body
            (go start)
      end))
+
+;;; A small helper function for the with macro.
+;;; Converts a flat list to a list of two element lists.
+(defun withify (lst)
+  (if (null lst) 
+    ()
+    (cons (list (car lst) (cadr lst)) (withify (cddr lst)))))
+
+;;; (with (var1 value1 var2 value2 var3 value3 ...) macro inspired by Arc.
+(defmacro with (vars &body body)
+  `(let* ,(withify vars) ,@body))
+
